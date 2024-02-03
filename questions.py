@@ -1,9 +1,5 @@
 import logging
-import os
 import re
-
-import redis
-from dotenv import load_dotenv
 
 
 logger = logging.getLogger(__file__)

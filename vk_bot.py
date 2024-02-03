@@ -62,14 +62,13 @@ def check_answer(text, player, quiz):
             random_id=get_random_id()
         )
         return Status.WAIT_FOR_ANSWER
-    else:
-        vk_api.messages.send(
-            user_id=event.user_id,
-            message=RIGHT_ANSWER_TEXT,
-            keyboard=return_keyboard(),
-            random_id=get_random_id()
-        )
-        return Status.ANSWERED
+    vk_api.messages.send(
+        user_id=event.user_id,
+        message=RIGHT_ANSWER_TEXT,
+        keyboard=return_keyboard(),
+        random_id=get_random_id()
+    )
+    return Status.ANSWERED
 
 
 def give_up(player, quiz):
