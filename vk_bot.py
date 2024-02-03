@@ -53,7 +53,6 @@ def send_new_question(player, quiz):
 
 
 def check_answer(text, player, quiz):
-    print(f'{player=}')
     answer = quiz.get_right_answer(player)
     if text.upper() != answer.upper().split('.')[0]:
         vk_api.messages.send(
@@ -86,7 +85,6 @@ def give_up(player, quiz):
 
 def dispatch(event, vk_api, quiz, status):
     text = event.text
-    print(f'{text=} {status=}')
     if status == Status.ANSWERED:
         match text:
             case 'Новый вопрос':
@@ -107,7 +105,7 @@ def dispatch(event, vk_api, quiz, status):
 
 
 if __name__ == '__main__':
-    load_dotenv()
+    load_dotenv(override=True)
     loglevel = os.getenv('LOG_LEVEL', default='INFO')
     log_chat = os.getenv('LOG_TG_CHAT_ID')
     log_tg_token = os.getenv('LOG_TG_BOT_TOKEN')
