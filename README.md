@@ -47,7 +47,7 @@ LOG_LEVEL=[NOTSET|DEBUG|(INFO)|WARN|ERROR|CRITICAL] необязательный
 LOG_TG_CHAT_ID=<ID для отправки логов, можете узнать у [**userinfobot**](https://telegram.me/userinfobot)>
 LOG_TG_BOT_TOKEN=<токен бота для отправки логов. можете не указывать, если хотите использовать одного и того же ТГ-бота>
 
-QUIZ_FILEPATH=./quiz-questions/azov15.txt
+QUIZ_FILEPATH=<файл с вопросами-ответами. можете использовать приложенный для примера файл ./questions/3f15.txt>
 
 REDIS_HOST=адрес сервера redis
 REDIS_PORT=порт сервера
