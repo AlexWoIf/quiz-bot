@@ -123,8 +123,8 @@ if __name__ == '__main__':
                           password=redis_password)
 
     quiz_filepath = os.getenv('QUIZ_FILEPATH')
-    with open(quiz_filepath, "r", encoding="UTF8") as my_file:
-        file_contents = my_file.read()
+    with open(quiz_filepath, "r", encoding="UTF8") as quiz_file:
+        file_contents = quiz_file.read()
     quiz = questions.Quiz(file_contents, storage)
 
     api_key = os.getenv('VK_API_KEY')
