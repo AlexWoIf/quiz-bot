@@ -49,10 +49,9 @@ def check_answer(update, context):
         text = WRONG_ANSWER_TEXT
         update.message.reply_text(text)
         return Status.CHECK_ANSWER
-    text = RIGHT_ANSWER_TEXT
     keyboard = [[BUTTON_NEXT_QUESTION, BUTTON_GIVE_UP],]
     reply_markup = ReplyKeyboardMarkup(keyboard)
-    update.message.reply_text(text, reply_markup=reply_markup)
+    update.message.reply_text(RIGHT_ANSWER_TEXT, reply_markup=reply_markup)
     return Status.ANSWERED
 
 
