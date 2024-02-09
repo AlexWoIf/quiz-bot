@@ -1,7 +1,7 @@
 import logging
 import os
 import traceback
-from enum import Enum
+from enum import IntEnum
 
 import redis
 import vk_api as vk
@@ -27,7 +27,7 @@ BUTTON_GIVE_UP = 'Сдаться'
 logger = logging.getLogger(__file__)
 
 
-class Status(Enum):
+class Status(IntEnum):
     ANSWERED = 0
     WAIT_FOR_ANSWER = 1
 
@@ -84,13 +84,14 @@ def give_up(player, quiz):
 
 def dispatch(event, vk_api, quiz, status):
     text = event.text
+    player = f'vk:{event.user_id}'
     if status == Status.WAIT_FOR_ANSWER:
         if text == 'Сдаться':
-            return give_up(f'vk:{event.user_id}', quiz)
+            return give_up(player, quiz)
         else:
-            return check_answer(text, f'vk:{event.user_id}', quiz)
+            return check_answer(text, player, quiz)
     if text == 'Новый вопрос':
-        return send_new_question(f'vk:{event.user_id}', quiz)
+        return send_new_question(player, quiz)
     vk_api.messages.send(
         user_id=event.user_id,
         message='Для игры нажмите "Новый вопрос"',
@@ -137,6 +138,12 @@ if __name__ == '__main__':
         try:
             for event in longpoll.listen():
                 if event.type == VkEventType.MESSAGE_NEW and event.to_me:
+                    player = f'vk:{event.user_id}'
+                    user_status = storage.hget(player, 'status')
+                    user_status = (0 if user_status is None
+                                   else int(user_status))
+                    status = Status(user_status)
                     status = dispatch(event, vk_api, quiz, status)
+                    storage.hset(player, 'status', int(status))
         except Exception as error:
             logger.error({'Error': error, 'Traceback': traceback.format_exc()})
