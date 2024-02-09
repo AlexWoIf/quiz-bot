@@ -29,6 +29,6 @@ class Quiz():
     def get_right_answer(self, player):
         question_number = self.storage.hget(player, 'question_number')
         if question_number is None:
-            raise IndexError("list index out of range")
+            raise IndexError("Question corresponding to this ID not present")
         (_, answer) = self.dict[int(question_number)]
         return answer
