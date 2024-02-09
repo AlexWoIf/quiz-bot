@@ -32,10 +32,3 @@ class Quiz():
             raise IndexError("list index out of range")
         (_, answer) = self.dict[int(question_number)]
         return answer
-
-
-def parse_quiz_text(quiz_text):
-    qa_pairs = re.findall(r'\n\n+Вопрос \d+:\n([\s\S]*?)'
-                          r'\n\n+Ответ:\n([\s\S]*?)\n\n+', quiz_text)
-    return {question_number: qa_pair for question_number, qa_pair
-            in enumerate(qa_pairs)}
