@@ -84,16 +84,13 @@ def give_up(player, quiz):
 
 def dispatch(event, vk_api, quiz, status):
     text = event.text
-    if status == Status.ANSWERED:
-        match text:
-            case 'Новый вопрос':
-                return send_new_question(f'vk:{event.user_id}', quiz)
-    else:
-        match text:
-            case 'Сдаться':
-                return give_up(f'vk:{event.user_id}', quiz)
-            case _:
-                return check_answer(text, f'vk:{event.user_id}', quiz)
+    if status == Status.WAIT_FOR_ANSWER:
+        if text == 'Сдаться':
+            return give_up(f'vk:{event.user_id}', quiz)
+        else:
+            return check_answer(text, f'vk:{event.user_id}', quiz)
+    if text == 'Новый вопрос':
+        return send_new_question(f'vk:{event.user_id}', quiz)
     vk_api.messages.send(
         user_id=event.user_id,
         message='Для игры нажмите "Новый вопрос"',
