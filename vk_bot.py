@@ -132,8 +132,6 @@ if __name__ == '__main__':
     vk_api = vk_session.get_api()
     longpoll = VkLongPoll(vk_session)
 
-    status = Status.ANSWERED
-
     while True:
         try:
             for event in longpoll.listen():
